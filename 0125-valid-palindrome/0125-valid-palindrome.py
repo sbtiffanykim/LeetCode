@@ -2,7 +2,6 @@ import re
 
 class Solution:
     def isPalindrome(self, s: str) -> bool:
-        s = re.sub('[^a-zA-Z0-9]', '', s).lower()
-        if s == s[::-1]: return True
-        else: return False
-        
+        s = s.lower()
+        s = re.sub('[^0-9a-z]+', '', s)
+        return True if s == s[::-1] else False
