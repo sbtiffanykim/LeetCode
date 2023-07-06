@@ -1,5 +1,3 @@
 class Solution:
     def numJewelsInStones(self, jewels: str, stones: str) -> int:
-        stones = collections.Counter(stones)
-        return sum([stones[j] for j in jewels if j in stones])
-        
+        return sum([stone in jewels for stone in stones])
