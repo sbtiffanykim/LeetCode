@@ -1,1 +1,1 @@
-SELECT max(R.num) AS num FROM (SELECT num FROM MyNumbers GROUP BY num HAVING count(num) = 1) AS R
+SELECT MAX(S.num) AS num FROM (SELECT num FROM MyNumbers GROUP BY num HAVING COUNT(num) = 1) AS S 
