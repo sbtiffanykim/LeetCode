@@ -1,12 +1,16 @@
 class Solution:
     def isValid(self, s: str) -> bool:
-        parentheses = {')': '(', '}': '{', ']': '['}
+        
         stack = list()
-        
+        match = {')': '(',  ']': '[', '}': '{'}
         for c in s:
-            if c not in parentheses:
+            if c not in match.keys():  # open parenthesis
                 stack.append(c)
-            elif not stack or stack.pop() != parentheses[c]:
-                return False
+            else:  # closed parenthesis
+                # if there isn't any open parenthesis or parenthesis does not match
+                if not stack or stack[-1] != match[c]:
+                    return False
+                stack.pop()
         
-        return (len(stack) == 0)
+        return False if stack else True
+        
