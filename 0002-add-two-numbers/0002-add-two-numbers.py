@@ -4,40 +4,24 @@
 #         self.val = val
 #         self.next = next
 class Solution:
-    def reverseList(self, head: ListNode) -> ListNode:
-        node, prev = head, None
-        
-        while node:
-            nxt = node.next
-            node.next = prev
-            prev, node = node, nxt
-        
-        return prev
-            
-    def toList(self, head: ListNode) -> [ListNode]:
-        result = list()
-        
-        while head:
-            result.append(head.val)
-            head = head.next
-        
-        return result
-    
-    def toLinkedList(self, res: ListNode):
-        prev = None
-        
-        for r in res:
-            node = ListNode(r)
-            node.val = r
-            node.next = prev
-            prev = node
-        
-        return node
-        
     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
-            a = self.toList(self.reverseList(l1))
-            b = self.toList(self.reverseList(l2))
-            res = int(''.join([str(x) for x in a])) + int(''.join([str(x) for x in b]))
-            res = [n for n in str(res)]
+        # create dummy to store answer
+        dummy = ListNode()
+        node = dummy
+        
+        flag = 0  # 1 if sum of two digits is greater than/equal to 10
+        while l1 or l2 or flag:
+            # add digit
+            val1 = l1.val if l1 else 0
+            val2 = l2.val if l2 else 0
+            val = val1 + val2 + flag
+            flag = val // 10
+            val %= 10  # last digit
+            node.next = ListNode(val)
             
-            return self.toLinkedList(res)
+            # update pointers
+            l1 = l1.next if l1 else None
+            l2 = l2.next if l2 else None
+            node = node.next
+        
+        return dummy.next
