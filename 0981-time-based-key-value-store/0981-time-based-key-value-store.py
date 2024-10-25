@@ -1,7 +1,7 @@
 class TimeMap:
 
     def __init__(self):
-        self.timemap = collections.defaultdict()
+        self.timemap = collections.defaultdict()  # list of (timestamp, value)
 
     def set(self, key: str, value: str, timestamp: int) -> None:
         if key not in self.timemap:
