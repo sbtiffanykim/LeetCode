@@ -4,17 +4,21 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
+
 class Solution:
     def goodNodes(self, root: TreeNode) -> int:
+        queue = deque()
+        res = 0
+        queue.append((root, -float('inf')))
         
-        def dfs(node, max_val):
-            if not node:
-                return 0
+        while queue:
+            cur_node, max_val = queue.popleft()
+            if cur_node.val >= max_val:
+                res += 1
             
-            res = 1 if node.val >= max_val else 0  # 1 if the node is good
-            max_val = max(max_val, node.val)
-            res += dfs(node.left, max_val)
-            res += dfs(node.right, max_val)            
-            return res
+            if cur_node.left:
+                queue.append((cur_node.left, max(max_val, cur_node.val)))
+            if cur_node.right:
+                queue.append((cur_node.right, max(max_val, cur_node.val)))                
         
-        return dfs(root, root.val)
+        return res
