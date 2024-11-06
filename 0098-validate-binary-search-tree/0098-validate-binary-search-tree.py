@@ -4,17 +4,20 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
+
 class Solution:
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
+        if not root:
+            return True
+        queue = deque([(root, -float('inf'), float('inf'))])
         
-        def valid(node, left, right):
-            if not node:
-                return True
-            if not (left < node.val < right):
+        while queue:
+            node, left, right = queue.popleft()
+            if not(left < node.val < right):
                 return False
-            
-            # left < node.left.val < node.val && node.val < node.right.val < right
-            return valid(node.left, left, node.val) and valid(node.right, node.val, right) 
+            if node.left:
+                queue.append((node.left, left, node.val))
+            if node.right:
+                queue.append((node.right, node.val, right))
         
-        # -inf < root.val < inf
-        return valid(root, -float('inf'), float('inf'))
+        return True
