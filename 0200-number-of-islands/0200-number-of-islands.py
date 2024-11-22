@@ -1,20 +1,29 @@
 class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
-        n, m = len(grid), len(grid[0])
+        row, col = len(grid), len(grid[0])
+        res = 0
+        dx = [-1, 1, 0, 0]
+        dy = [0, 0, -1, 1]
         
-        def dfs(x, y):
-            if x < 0 or x >= n or y < 0 or y >= m or grid[x][y] != '1':
-                return
-            grid[x][y] = '#'
-            dfs(x-1, y)
-            dfs(x+1, y)
-            dfs(x, y-1)
-            dfs(x, y+1)
+        def bfs(i, j):
+            queue = deque()
+            queue.append((i, j))
+            grid[i][j] = '-1'
+            
+            while queue:
+                x, y = queue.popleft()
+                for k in range(4):
+                    nx = x + dx[k]
+                    ny = y + dy[k]
+                    if nx < 0 or nx >= row or ny < 0 or ny >= col or grid[nx][ny] != '1':
+                        continue
+                    queue.append((nx, ny))
+                    grid[nx][ny] = '-1'
         
-        cnt = 0
-        for i in range(n):
-            for j in range(m):
+        for i in range(row):
+            for j in range(col):
                 if grid[i][j] == '1':
-                    dfs(i, j)
-                    cnt += 1
-        return cnt
+                    bfs(i, j)
+                    res += 1
+        
+        return res
